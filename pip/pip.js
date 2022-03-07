@@ -15,7 +15,6 @@ const ProductDetails = ({productID}) => {
   const [outOfStock , setOutOfStock] = useState(false);
 
   useEffect(() => {
-    alert();
     fetch(productDetailsURL).then(response => response.json())
     .then(data => {
       setProductInfo( (productInfo) => data ) ; 
@@ -23,24 +22,30 @@ const ProductDetails = ({productID}) => {
 
     fetch(checkAvailableStockURL).then(response => response.json())
     .then(data => {
-      setAvailableStock( (availableStock) => data ) ; 
+      setAvailableStock( (availableStock) => data.stocks ) ; 
     })
 
   },[]);
 
   async function purchaseProduct(){ 
+  
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ productID: productID  , quantity : purchasingQuantity })
     };
-    const response = await fetch('http://localhost:2001/api/product/purchase/', requestOptions);
-    if(response.status===409){
-      setOutOfStock ( (outOfStock) => true );
-    }else{
-      const data = await response.json();
-      alert("Purchase Success");
-    }
+
+    fetch('http://localhost:2001/api/product/purchase/', requestOptions).then((data) => {
+      if(data.status===409){
+        setOutOfStock ( (outOfStock) => true );
+        return ;
+      }
+      setAvailableStock( (availableStock) => (availableStock- purchasingQuantity)) ;
+      if(availableStock === 0){
+          setOutOfStock ( (outOfStock) => true );
+      } 
+    }); 
+    
   }
 
   return (
@@ -65,8 +70,10 @@ const ProductDetails = ({productID}) => {
              Et dolorem neglegentur philosophia duo,
              cum te dicam recteque. Vel et labore indoctum principes, sed clita inermis dissentiunt te.</h3></p>
 
+
              <input type="text" id="qty" name="quantity" value={purchasingQuantity} onInput={e => setPurchasingQuantity(parseInt(e.target.value))}/>
-             <button onClick={purchaseProduct} > Purchase </button>  {availableStock} in stock
+             <button onClick={purchaseProduct} > Purchase </button> 
+             <div> <h4>{availableStock} in stock</h4> </div>
         </div>
       </div>
       
