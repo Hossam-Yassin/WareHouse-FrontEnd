@@ -12,6 +12,10 @@ Attached sample pages for Grid and PIP for different products.
 
 Please connect to the front-end repository and pull the latest code and ensure to install all dependencies that required by this project , you can check all project dependencies in the package.json file 
 
+to start you application : 
+1- move to the folder that contain the code 
+2- run command : npm install
+3- run command : npm start
 
 
 Note: 
