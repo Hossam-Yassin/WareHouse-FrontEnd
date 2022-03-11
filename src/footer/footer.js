@@ -2,10 +2,8 @@ import ReactDOM from "react-dom";
 
 function Footer({productInfo}) {
   return (
-
-    <div style={{alignItems: "center" , justifyContent: "center" , display: "flex"}}>
-      <br/><br/><br/><br/>
-      <h1 > IKEA Footer Section </h1>  
+    <div style={{alignItems: "center" , justifyContent: "center" , display: "flex"}}> 
+      <img width="100%" height="100%"  src={require('./footer.jpg')}  />
     </div>  
   )
 }
