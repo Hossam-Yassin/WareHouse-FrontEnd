@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+
 import Header from "../header/header.js";
 import Footer from "../footer/footer.js";
 
-import './grid.css';
+
 import Product from"./product.js"
-
+import './grid.css';
 const PRODUCTS_LIST_END_POINT= "http://127.0.0.1:2001/api/products/" ;
-
 
 const Grid = () => {
 
@@ -25,7 +25,6 @@ const Grid = () => {
       setPageID( (pageID) => pageID+1 );     
     })
   },[]);
-
 
   useEffect(() => {
    if(loadMore === false){
@@ -48,6 +47,7 @@ const Grid = () => {
   return (
     <div>
       <Header/>
+      
       <h1 style={{alignItems: "center" , justifyContent: "center" , display: "flex"}}> Products Grid </h1> <br/>
       <div className="row">
         {products.map( 
@@ -56,6 +56,7 @@ const Grid = () => {
       <div style={{alignItems: "center" , justifyContent: "center" , display: "flex"}}>
         <button id="loadMoreID"  onClick={loadMoreProducts} >More ... </button>
       </div>
+      <br/>
       <Footer/>
     </div> 
   );
